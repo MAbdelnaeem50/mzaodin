@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Navbar />
+    <NavBar />
     <div class="container mx-auto p-4 pt-8" dir="rtl">
 
       <!-- Tabs -->
@@ -34,13 +34,26 @@
             <img :src="item.images[item.currentImageIndex]" alt="product"
               class="w-full h-40 sm:h-60 object-contain rounded" />
             <button @click="prevImage(item)"
-              class="absolute right-0 top-1/2 transform -translate-y-1/2 bg-blue-300  text-white px-2 by-3 rounded-full">
-              &#10094;
+              class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-white p-1 rounded-full shadow-md">
+              <chevron-right-icon class="w-6 h-6" />
             </button>
             <button @click="nextImage(item)"
-              class="absolute left-0 top-1/2 transform -translate-y-1/2  bg-blue-300  text-white px-2 by-3 rounded-full">
-              &#10095;
+              class="absolute left-2 top-1/2 transform -translate-y-1/2 bg-white p-1 rounded-full shadow-md">
+              <chevron-left-icon class="w-6 h-6" />
             </button>
+          </div>
+
+          <!-- Image Navigation Dots -->
+          <div class="flex justify-center mb-4 space-x-2 rtl:space-x-reverse">
+            <span 
+              v-for="(_, index) in item.images" 
+              :key="index"
+              :class="[
+                'h-2 w-2 rounded-full cursor-pointer', 
+                index === item.currentImageIndex ? 'bg-blue-500' : 'bg-gray-300'
+              ]"
+              @click="setImage(item, index)"
+            ></span>
           </div>
 
           <!-- Item Details -->
@@ -51,35 +64,45 @@
           <div v-if="item.status === 'قادِم' || item.status === 'جاري'" class="text-center mb-4">
             <!-- Countdown Timer -->
             <div class="grid grid-cols-4 gap-1 sm:gap-1">
-              <div v-for="(value, label) in item.countdown" :key="label" :class="[
-                'p-2 sm:p-2 rounded-lg shadow-lg text-center',
-                item.status === 'قادِم' ? 'bg-green-500' : 'bg-red-500'
-              ]">
-                <div class="text-white text-xs sm:text-sm">{{ value }}</div>
-                <span class="text-white text-xs sm:text-sm">{{ label }}</span>
+              <div v-for="(value, label) in item.countdown" :key="label" class="flex flex-col items-center">
+                <div :class="[
+                  'p-2 sm:p-2 rounded-lg shadow-lg text-center lg:w-14 w-20 h-11',
+                  item.status === 'قادِم' ? 'bg-green-500' : 'bg-red-500'
+                ]">
+                  <div class="text-white text-lg sm:text-lg">{{ value }}</div>
+                </div>
+                <span class="text-black text-xs sm:text-sm mt-1">{{ label }}</span>
               </div>
             </div>
           </div>
-          <div v-else-if="item.status === 'مُنتهى'" class="text-center text-black font-bold mb-7">
+          <div v-else-if="item.status === 'مُنتهى'" class="text-center text-black font-bold mb-9">
             <p>سعر المنتج التقديري : 350 رس</p>
 
             <p>سعر المنتج التقديري : 350 رس</p>
           </div>
-
-          <button class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-2xl w-full ">عرض التفاصيل</button>
+          <router-link to="/Product" >
+          <button class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-2xl w-full  ">عرض التفاصيل</button>
+        </router-link>
         </div>
       </div>
 
 
     </div>
+    <FooterBar />
   </div>
 </template>
 
 <script>
-import Navbar from '@/components/NavBar.vue';
+import NavBar from '@/components/NavBar.vue';
+import FooterBar from '@/components/FooterBar.vue';
+import { ChevronLeft, ChevronRight } from 'lucide-vue-next';
+
 export default {
   components: {
-    Navbar,
+    NavBar,
+    FooterBar,
+    ChevronLeftIcon: ChevronLeft,
+    ChevronRightIcon: ChevronRight,
   },
   data() {
     return {
@@ -158,6 +181,9 @@ export default {
     },
     prevImage(item) {
       item.currentImageIndex = (item.currentImageIndex - 1 + item.images.length) % item.images.length;
+    },
+    setImage(item, index) {
+      item.currentImageIndex = index;
     },
     startAutoSwap() {
       setInterval(() => {

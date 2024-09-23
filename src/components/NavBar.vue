@@ -66,7 +66,9 @@
            
           </a>
         </li>
+        <router-link to="/settings">
         <li><a><i class="fa-solid fa-gear"></i>الإعدادات</a></li>
+        </router-link>
         <router-link to="/login">
         <li><a><i class="fa-solid fa-right-from-bracket"></i>تسجيل الخروج</a></li>
         </router-link>
