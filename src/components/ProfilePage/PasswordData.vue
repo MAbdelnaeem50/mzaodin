@@ -1,7 +1,7 @@
 <template>
 
     <form @submit.prevent="updatePassword">
-        <div class="grid gap-6 mb-6 md:grid-cols-2 grid-cols-1">
+        <div class="grid gap-2 mb-6 md:grid-cols-2 grid-cols-1">
             <div class="mb-6 lg:col-span-2">
                 <input type="password" id="password"
                 class=" appearance-none  rounded-lg w-full py-3 pl-3 pr-10 border-2 border-gray-200 text-gray-700 leading-tight text-right focus:outline-none focus:shadow-outline "

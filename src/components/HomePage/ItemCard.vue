@@ -49,7 +49,7 @@
         <div class="grid grid-cols-4 gap-1 sm:gap-1">
           <div v-for="(value, label) in item.countdown" :key="label" class="flex flex-col items-center">
             <div :class="[
-              'p-2 sm:p-2 rounded-lg shadow-lg text-center lg:w-14 w-20 h-11',
+              'p-2 sm:p-2 rounded-lg shadow-lg text-center lg:w-14 w-16 h-11',
               item.status === 'قادِم' ? 'bg-green-500' : 'bg-red-500'
             ]">
               <div class="text-white text-lg sm:text-lg">{{ value }}</div>

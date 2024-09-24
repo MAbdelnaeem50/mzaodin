@@ -1,7 +1,7 @@
 <template>
-    <div dir="rtl">
+    <div dir="rtl" class="lg:px-0 p-2">
         <NavBar />
-        <div class="lg:px-10 lg:w-1/2 mx-auto border-2 border-gray-300 mt-10 py-10 rounded-2xl">
+        <div class="lg:px-10 px-2 lg:w-1/2 mx-auto border-2 border-gray-300 mt-10 py-10 rounded-2xl ">
             <div class="flex justify-center items-center">
                 <h1 class="text-xl font-bold mb-2 text-blue-500">التسجيل في المزاد</h1>
             </div>
