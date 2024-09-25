@@ -1,18 +1,36 @@
 <template>
   <nav dir="rtl" class="bg-white p-4 rtl">
-    <div class="container mx-auto flex flex-col lg:flex-row justify-between items-center">
-      <div class="w-full lg:w-auto flex justify-between items-center lg:order-3 mb-4 lg:mb-0">
-        <!-- User section -->
-        <div class="flex items-center space-x-4 space-x-reverse order-3 lg:order-none">
-          <!-- Buttons -->
-          <div class="hidden lg:flex space-x-2 space-x-reverse">
-            <router-link to="/register">
-              <button class="bg-blue-500 text-white hover:bg-blue-600 px-4 py-2 rounded-lg">انشاء حساب</button>
-            </router-link>
-            <router-link to="/login">
-              <button class="bg-blue-100 text-blue-600 hover:bg-blue-200 px-4 py-2 rounded-lg">تسجيل الدخول</button>
-            </router-link>
-          </div>
+    <div class="container mx-auto flex justify-between items-center">
+      <!-- Menu toggle button for small screens (right) -->
+      <button @click="toggleMenu" class="lg:hidden order-first">
+        <i class="fa-solid fa-bars fa-xl"></i>
+      </button>
+
+      <!-- Logo (center for small screens, left for large screens) -->
+      <div class="navbar-logo lg:order-first flex-1 lg:flex-none text-center lg:text-right">
+        <img src="../assets/logo.png" alt="Logo" class="h-16 inline-block" />
+      </div>
+
+      <!-- Navigation menu (hidden on small screens) -->
+      <ul class="hidden lg:flex space-x-4 space-x-reverse items-center">
+        <router-link to="/">
+          <li><a class="text-gray-700 hover:text-blue-600">الرئيسية</a></li>
+        </router-link>
+        <li><a href="#about" class="text-gray-700 hover:text-blue-600">شروط المزادات</a></li>
+      </ul>
+
+      <!-- User section -->
+      <div class="flex items-center space-x-4 space-x-reverse order-last">
+        <!-- Buttons for large screens -->
+        <div class="hidden lg:flex space-x-2 space-x-reverse">
+          <router-link to="/register" class="bg-blue-500 text-white hover:bg-blue-600 px-4 py-2 rounded-lg">
+            انشاء حساب
+          </router-link>
+          <router-link to="/login" class="bg-blue-100 text-blue-600 hover:bg-blue-200 px-4 py-2 rounded-lg">
+            تسجيل الدخول
+          </router-link>
+        </div>
+
           <!-- Notification dropdown -->
           <div class="flex-none">
             <div class="dropdown dropdown-end">
@@ -66,52 +84,45 @@
           </div>
           <span class="text-gray-700 hidden lg:inline">أحمد محمد</span>
         </div>
-
-        <!-- Logo for small screens -->
-        <div class="navbar-logo lg:hidden flex-grow flex justify-center order-2">
-          <img src="../assets/logo.png" alt="Logo" class="h-16" />
-        </div>
-
-        <!-- Menu toggle button for small screens -->
-        <button @click="toggleMenu" class="lg:hidden order-1">
-          <i class="fa-solid fa-bars fa-xl"></i>
-        </button>
       </div>
+   
 
-      <!-- Navigation menu -->
-      <ul :class="{
-        'fixed top-0 right-0 w-3/4 h-full px-20 text-center pt-40 bg-white shadow-lg z-50 transform transition-transform duration-300 ease-in-out': true,
-        'translate-x-full': !isMenuOpen,
-        'translate-x-0': isMenuOpen
-      }" class="lg:flex flex-col lg:flex-row space-y-6 lg:space-y-0 lg:space-x-4 lg:space-x-reverse items-center w-full lg:w-auto lg:order-2 lg:static lg:shadow-none lg:h-auto">
-        <!-- Close button for mobile menu -->
-        <button @click="toggleMenu" class="lg:hidden absolute top-8 right-8 text-gray-700">
-          <i class="fa-solid fa-times fa-xl"></i>
-        </button>
-
-        <router-link to="/">
-          <li><a href="#home" class="text-gray-700 hover:text-blue-600  ">الرئيسية</a></li>
-        </router-link>
-        <li><a href="#about" class="text-gray-700 hover:text-blue-600">شروط المزادات </a></li>
-
-        <!-- Buttons for small screens -->
-        <div class="lg:hidden mt-4">
-          <div class="flex flex-col space-y-6">
-            <router-link to="/register">
-              <button class="bg-blue-500 text-white hover:bg-blue-600 px-6 py-2 rounded-lg">انشاء حساب</button>
-            </router-link>
-            <router-link to="/login">
-              <button class="bg-blue-100 text-blue-600 hover:bg-blue-200 px-4 py-2 rounded-lg">تسجيل الدخول</button>
-            </router-link>
-          </div>
+    <!-- Mobile menu -->
+    <div :class="{
+      'fixed inset-y-0 right-0 bg-white z-50 lg:hidden w-3/4 shadow-lg text-center px-10': true,
+      'translate-x-full': !isMenuOpen,
+      'translate-x-0': isMenuOpen
+    }" class="transition-transform duration-300 ease-in-out">
+      <div class="flex flex-col h-full p-4">
+        <div class="flex justify-between items-center mb-8">
+          <img src="../assets/logo.png" alt="Logo" class="h-16" />
+          <button @click="toggleMenu" class="text-gray-700">
+            <i class="fa-solid fa-times fa-xl"></i>
+          </button>
         </div>
-      </ul>
-
-      <!-- Logo for large screens -->
-      <div class="navbar-logo hidden lg:block lg:order-1">
-        <img src="../assets/logo.png" alt="Logo" class="h-16" />
+        <ul class="flex flex-col space-y-4 mb-8">
+          <router-link to="/" @click="toggleMenu">
+            <li><a class="text-gray-700 hover:text-blue-600">الرئيسية</a></li>
+          </router-link>
+          <li><a href="#about" @click="toggleMenu" class="text-gray-700 hover:text-blue-600">شروط المزادات</a></li>
+        </ul>
+        <div class="flex flex-col space-y-4">
+          <router-link to="/register" @click="toggleMenu" class="bg-blue-500 text-white hover:bg-blue-600 px-4 py-2 rounded-lg text-center">
+            انشاء حساب
+          </router-link>
+          <router-link to="/login" @click="toggleMenu" class="bg-blue-100 text-blue-600 hover:bg-blue-200 px-4 py-2 rounded-lg text-center">
+            تسجيل الدخول
+          </router-link>
+        </div>
       </div>
     </div>
+
+    <!-- Overlay -->
+    <div 
+      v-if="isMenuOpen" 
+      @click="toggleMenu" 
+      class="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
+    ></div>
   </nav>
 </template>
 
